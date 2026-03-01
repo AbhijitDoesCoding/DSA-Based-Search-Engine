@@ -15,9 +15,18 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "scrape": "node scrapeCodeforces.js && node scrapeLeetcode.js && node utils/merge.js",
+    "start": "node index.js"
   },
   "dependencies": {
-    "puppeteer": "^24.37.5"
+    "cheerio": "^1.2.0",
+    "express": "^5.2.1",
+    "jsdom": "^28.1.0",
+    "natural": "^8.1.1",
+    "node-fetch": "^3.3.2",
+    "puppeteer": "^24.37.5",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "stopword": "^3.1.5"
   }
 }
