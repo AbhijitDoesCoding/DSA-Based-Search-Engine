@@ -1,0 +1,23 @@
+{
+  "name": "dsa_bse",
+  "version": "1.0.0",
+  "description": "DSA based search engine",
+  "homepage": "https://github.com/AbhijitDoesCoding/DSA-Based-Search-Engine#readme",
+  "bugs": {
+    "url": "https://github.com/AbhijitDoesCoding/DSA-Based-Search-Engine/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbhijitDoesCoding/DSA-Based-Search-Engine.git"
+  },
+  "license": "ISC",
+  "author": "Abhijit",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "puppeteer": "^24.37.5"
+  }
+}
