@@ -65,6 +65,16 @@ When you search for “tree,” you’ll get results mentioning “tree” every
 - **Puppeteer YouTube Tutorial:** [Watch Tutorial](https://www.youtube.com/watch?v=lgyszZhAZOI)
 - **Puppeteer Documentation:** [Visit Site](https://pptr.dev/)
 
+- # DSA Search Engine
+🚀 **Live Demo:** [https://dsa-based-search-engine-zode.onrender.com/](https://dsa-based-search-engine-zode.onrender.com/)
+
+A high-performance, industrial-style search engine...
+
+## ⚡ Optimization for Deployment
+To host this efficiently on Render's free tier (512MB RAM), the project uses:
+- **Pre-built Indexing:** The TF-IDF vectors are pre-calculated locally to reduce startup memory usage.
+- **Memory Management:** Optimized JSON parsing to handle 8,000+ problem vectors within a limited heap size.
+
 ## 📄 Data Sources
 - **Codeforces**: 9000+ problems
 - **LeetCode**: 3000+ problems
