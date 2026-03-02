@@ -65,7 +65,7 @@ When you search for “tree,” you’ll get results mentioning “tree” every
 - **Puppeteer YouTube Tutorial:** [Watch Tutorial](https://www.youtube.com/watch?v=lgyszZhAZOI)
 - **Puppeteer Documentation:** [Visit Site](https://pptr.dev/)
 
-- # DSA Search Engine
+# DSA Search Engine
 🚀 **Live Demo:** [https://dsa-based-search-engine-zode.onrender.com/](https://dsa-based-search-engine-zode.onrender.com/)
 
 A high-performance, industrial-style search engine...
