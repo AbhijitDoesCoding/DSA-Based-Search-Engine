@@ -16,6 +16,7 @@
   "main": "index.js",
   "scripts": {
     "scrape": "node scrapeCodeforces.js && node scrapeCses.js && node scrapeLeetcode.js && node utils/merge.js",
+    "build-index": "node build-index.js",
     "start": "node index.js"
   },
   "dependencies": {

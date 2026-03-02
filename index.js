@@ -57,56 +57,33 @@ app.use((req, res, next) => {
 /* ---------------------- */
 
 async function loadProblemsAndBuildIndex() {
-  console.log("\n--- Initializing Search Index ---\n");
+  console.log("\n--- Loading Pre-built Search Index ---\n");
 
   try {
     const dataPath = path.join(__dirname, "corpus", "all-problems.json");
+    const indexPath = path.join(__dirname, "corpus", "prebuilt-index.json");
 
-    const data = await fs.readFile(dataPath, "utf-8");
-    problems = JSON.parse(data);
+    // Simultaneously load problems and pre-built index
+    const [problemsData, indexData] = await Promise.all([
+      fs.readFile(dataPath, "utf-8"),
+      fs.readFile(indexPath, "utf-8")
+    ]);
 
-    console.log(`Loaded ${problems.length} problems`);
+    problems = JSON.parse(problemsData);
+    const parsedIndex = JSON.parse(indexData);
 
-    tfidf = new TfIdf();
+    docVectors = parsedIndex.docVectors;
+    docMagnitudes = parsedIndex.docMagnitudes;
 
-    console.log("Indexing documents...");
-
-    for (let idx = 0; idx < problems.length; idx++) {
-      const problem = problems[idx];
-
-      const text = preprocess(
-        `${problem.title} ${problem.title} ${problem.description || ""}`
-      );
-
-      tfidf.addDocument(text, idx.toString());
-
-      if ((idx + 1) % 5000 === 0) {
-        console.log(`Indexed ${idx + 1}`);
-      }
-    }
-
-    console.log("Building cosine vectors...");
-
-    docVectors = new Array(problems.length);
-    docMagnitudes = new Array(problems.length);
-
-    for (let idx = 0; idx < problems.length; idx++) {
-      const vector = {};
-      let sumSquares = 0;
-
-      tfidf.listTerms(idx).forEach(({ term, tfidf: weight }) => {
-        vector[term] = weight;
-        sumSquares += weight * weight;
-      });
-
-      docVectors[idx] = vector;
-      docMagnitudes[idx] = Math.sqrt(sumSquares);
-    }
+    // Restore TF-IDF state via constructor
+    tfidf = new TfIdf(parsedIndex.tfidfData);
 
     isReady = true;
-    console.log("\n✅ Indexing Complete. Server is fully operational.\n");
+    console.log(`✅ Loaded ${problems.length} problems and index. Server Ready.\n`);
   } catch (error) {
-    console.error("❌ ERROR during index building:", error);
+    console.error("❌ ERROR loading pre-built index:", error.message);
+    console.log("👉 Please run 'npm run build-index' to generate it.");
+    process.exit(1);
   }
 }
 
