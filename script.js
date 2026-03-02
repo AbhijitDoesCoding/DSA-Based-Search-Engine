@@ -4,14 +4,12 @@ const queryInput = document.getElementById("query-input");
 const resultsDiv = document.getElementById("results");
 const resultsMeta = document.getElementById("results-meta");
 const spinner = document.getElementById("spinner");
-const themeToggle = document.getElementById("theme-toggle");
 const platformFilter = document.getElementById("platform-filter");
 const sortBy = document.getElementById("sort-by");
 const recentSearchesDiv = document.getElementById("recent-searches");
 const loadMoreBtn = document.getElementById("load-more-btn");
 
 // Constants
-const THEME_KEY = "dsa_search_theme";
 const HISTORY_KEY = "dsa_search_history";
 const RESULTS_PER_PAGE = 15;
 
@@ -38,24 +36,6 @@ function getPlatformLogo(platform) {
   if (p.includes("cses")) return "cses.png";
   if (p.includes("atcoder")) return "atcoder.jpeg";
   return "codeforces.png"; // default
-}
-
-/**
- * Theme Management
- */
-function toggleTheme() {
-  const isDark = document.body.classList.toggle("dark");
-  themeToggle.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
-  localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
-}
-
-function initTheme() {
-  const saved = localStorage.getItem(THEME_KEY);
-  const isDark = saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches);
-  if (isDark) {
-    document.body.classList.add("dark");
-    themeToggle.textContent = "☀️ Light Mode";
-  }
 }
 
 /**
@@ -119,13 +99,6 @@ function renderResults() {
   resultsMeta.classList.remove("hidden");
   resultsMeta.textContent = `Showing ${visibleCount} of ${totalCount} matching problems`;
 
-  const resumeBoost = document.getElementById("resume-boost");
-  if (totalCount > 0) {
-    resumeBoost.classList.remove("hidden");
-  } else {
-    resumeBoost.classList.add("hidden");
-  }
-
   // Load More Button Visibility
   if (visibleCount < totalCount) {
     loadMoreBtn.classList.remove("hidden");
@@ -134,12 +107,12 @@ function renderResults() {
   }
 
   if (totalCount === 0) {
-    resultsDiv.innerHTML = `<div class="no-results">No problems found matching your criteria.</div>`;
+    resultsDiv.innerHTML = `<div class="no-results" style="text-align:center; padding: 40px; color: var(--text-muted);">No problems found matching your criteria.</div>`;
     return;
   }
 
   resultsDiv.innerHTML = paginatedResults.map((p, idx) => `
-    <article class="card ${idx === 0 && sortBy.value === "relevance" ? 'featured' : ''}">
+    <article class="card">
       <div class="card-header">
         <img src="assets/logos/${getPlatformLogo(p.platform)}" alt="${p.platform}" class="platform-logo">
         <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="card-title">
@@ -148,7 +121,7 @@ function renderResults() {
       </div>
       <div class="platform-tag">
         <span>Source: <strong>${p.platform}</strong></span>
-        ${p.score ? `<span class="score-tag">Match: ${(parseFloat(p.score) * 100).toFixed(1)}%</span>` : ""}
+        ${p.score ? `<span class="score-tag">${(parseFloat(p.score) * 100).toFixed(1)}% Match</span>` : ""}
       </div>
     </article>
   `).join("");
@@ -158,8 +131,8 @@ function updatePlatformFilter(results) {
   const platforms = [...new Set(results.map(r => r.platform))].sort();
   const current = platformFilter.value;
   
-  platformFilter.innerHTML = `<option value="all">All Platforms</option>` + 
-    platforms.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join("");
+  platformFilter.innerHTML = `<option value="all">ALL PLATFORMS</option>` + 
+    platforms.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p).toUpperCase()}</option>`).join("");
     
   if (platforms.includes(current)) {
     platformFilter.value = current;
@@ -182,7 +155,6 @@ searchForm.addEventListener("submit", async (e) => {
   saveToHistory(query);
 
   try {
-    console.log(`Sending search request for: ${query}`);
     const response = await fetch("/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -202,7 +174,7 @@ searchForm.addEventListener("submit", async (e) => {
     renderResults();
   } catch (err) {
     console.error("Search failed:", err);
-    resultsDiv.innerHTML = `<div class="error-msg">⚠️ ${escapeHtml(err.message)}</div>`;
+    resultsDiv.innerHTML = `<div class="error-msg" style="color: #ef4444; text-align: center; padding: 20px;">⚠️ ${escapeHtml(err.message)}</div>`;
   } finally {
     spinner.classList.add("hidden");
   }
@@ -211,9 +183,6 @@ searchForm.addEventListener("submit", async (e) => {
 // Filters
 platformFilter.addEventListener("change", renderResults);
 sortBy.addEventListener("change", renderResults);
-
-// Theme toggle
-themeToggle.addEventListener("click", toggleTheme);
 
 // Load More
 loadMoreBtn.addEventListener("click", () => {
@@ -238,6 +207,5 @@ document.addEventListener("keydown", (e) => {
 });
 
 // Initialization
-initTheme();
 renderHistory();
 console.log("DSA Search Client Initialized");

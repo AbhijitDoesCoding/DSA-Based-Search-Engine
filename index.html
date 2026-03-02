@@ -3,28 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSA Problem Search - Find Your Next Challenge</title>
+    <title>DSA Problem Search - Semantic Problem Discovery</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔎</text></svg>">
     <link rel="stylesheet" href="styles.css">
-    <!-- Preload logos for better UX -->
-    <link rel="prefetch" href="assets/logos/leetcode.png">
-    <link rel="prefetch" href="assets/logos/codeforces.png">
-    <link rel="prefetch" href="assets/logos/cses.png">
-    <link rel="prefetch" href="assets/logos/atcoder.jpeg">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <span class="logo-text">DSA Search</span>
+                <span class="logo-tagline">Semantic Problem Search</span>
+            </div>
+            <div class="nav-right">
+                <a href="docs.html" class="nav-link">Docs</a>
+                <a href="https://github.com/AbhijitDoesCoding/DSA-Based-Search-Engine.git" target="_blank" class="github-star">
+                    <span>⭐ Star on GitHub</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
-        <header class="hero-content">
-            <h1>Search 14000+ DSA Problems</h1>
-            <p class="tagline">
-                Instantly find challenges across 
-                <span class="platform-icons">
-                    <img src="assets/logos/codeforces.png" alt="Codeforces" title="Codeforces">
-                    <img src="assets/logos/atcoder.jpeg" alt="AtCoder" title="AtCoder">
-                    <img src="assets/logos/cses.png" alt="CSES" title="CSES">
-                    <img src="assets/logos/leetcode.png" alt="LeetCode" title="LeetCode">
-                </span>
-            </p>
+        <header class="hero">
+            <p class="hero-intro">High Performance Competitive Programming Search</p>
+            <h1>Semantic Search for <span class="accent-text">14,000+</span> DSA Problems</h1>
+            <p class="hero-subtext">Powered by TF-IDF vector ranking and cosine similarity scoring.</p>
+            <div class="hero-divider"></div>
         </header>
 
         <main>
@@ -37,66 +41,76 @@
                     autocomplete="off"
                     required
                 >
-                <button type="submit" class="primary-btn">Search</button>
+                <button type="submit" class="primary-btn">SEARCH</button>
             </form>
 
             <div class="toolbar">
                 <div class="select-group">
-                    <label for="platform-filter">Platform</label>
+                    <label for="platform-filter">PLATFORM</label>
                     <select id="platform-filter">
-                        <option value="all">All Platforms</option>
+                        <option value="all">ALL PLATFORMS</option>
                     </select>
                 </div>
 
                 <div class="select-group">
-                    <label for="sort-by">Sort by</label>
+                    <label for="sort-by">SORT BY</label>
                     <select id="sort-by">
-                        <option value="relevance">Relevance</option>
-                        <option value="title-asc">Title (A-Z)</option>
-                        <option value="title-desc">Title (Z-A)</option>
+                        <option value="relevance">RELEVANCE</option>
+                        <option value="title-asc">TITLE (A-Z)</option>
+                        <option value="title-desc">TITLE (Z-A)</option>
                     </select>
                 </div>
-
-                <button id="theme-toggle" class="secondary-btn" type="button">
-                    🌙 Dark Mode
-                </button>
             </div>
 
             <section class="history-section">
                 <div id="recent-searches" class="recent-searches"></div>
             </section>
 
-            <p class="cta">Tip: Press <kbd>/</kbd> to focus search instantly.</p>
-
             <div id="results-meta" class="results-meta hidden"></div>
-            <div id="resume-boost" class="resume-boost hidden">
-                Implemented paginated result rendering for performance optimization.
-            </div>
             
             <div id="spinner" class="spinner-container hidden">
                 <div class="spinner"></div>
-                <div class="loading-text">Indexing & Searching...</div>
+                <div class="loading-text">SEARCHING INDEX...</div>
             </div>
 
             <div id="results" class="results">
-                <!-- Results will be injected here -->
                 <div class="initial-msg">
                     <p>Ready to search? Enter a topic or problem name above.</p>
                 </div>
             </div>
 
             <div class="load-more-container">
-                <button id="load-more-btn" class="secondary-btn hidden">Load More Results</button>
+                <button id="load-more-btn" class="secondary-btn hidden">LOAD MORE RESULTS</button>
             </div>
         </main>
         
-        <footer>
-            <p>Data updated periodically from Codeforces, AtCoder, CSES, and LeetCode.</p>
-            <div class="perf-card">
-                <div class="perf-item"><span>Indexed</span><strong>14,000+ problems</strong></div>
-                <div class="perf-item"><span>Search time</span><strong>~50ms</strong></div>
-                <div class="perf-item"><span>Method</span><strong>TF-IDF Vector Search</strong></div>
-                <div class="perf-item"><span>Ranking</span><strong>Cosine Similarity</strong></div>
+        <section class="performance-panel">
+            <div class="perf-item">
+                <span class="perf-label">Indexed</span>
+                <span class="perf-value">14,000+ Problems</span>
+            </div>
+            <div class="perf-item">
+                <span class="perf-label">Search Time</span>
+                <span class="perf-value">~50ms</span>
+            </div>
+            <div class="perf-item">
+                <span class="perf-label">Ranking</span>
+                <span class="perf-value">Cosine Similarity</span>
+            </div>
+            <div class="perf-item">
+                <span class="perf-label">Method</span>
+                <span class="perf-value">TF-IDF</span>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>Client-side semantic search engine for competitive programming.</p>
+            <div class="footer-links">
+                <a href="https://github.com/AbhijitDoesCoding" target="_blank">GitHub</a>
+                <span class="divider">|</span>
+                <a href="https://www.linkedin.com/in/abhijit-balpande/" target="_blank">LinkedIn</a>
+                <span class="divider">|</span>
+                <a href="https://github.com/AbhijitDoesCoding/DSA-Based-Search-Engine.git" target="_blank">Repository</a>
             </div>
         </footer>
     </div>

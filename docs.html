@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - DSA Search Engine</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔎</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .docs-container {
+            max-width: 800px;
+            margin: 60px auto;
+            line-height: 1.6;
+        }
+        .docs-section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+        .docs-section h2 {
+            color: var(--accent);
+            margin-top: 0;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        .docs-section h3 {
+            color: var(--text-primary);
+            margin-top: 25px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+        .docs-section p {
+            color: var(--text-secondary);
+        }
+        .formula {
+            background: var(--bg-3);
+            padding: 15px;
+            border-radius: var(--radius);
+            font-family: 'Menlo', 'Monaco', monospace;
+            color: var(--accent);
+            margin: 15px 0;
+            border-left: 3px solid var(--accent);
+        }
+        .example-box {
+            background: rgba(249, 115, 22, 0.05);
+            padding: 15px;
+            border: 1px dashed var(--accent);
+            border-radius: var(--radius);
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        .resource-list {
+            list-style: none;
+            padding: 0;
+        }
+        .resource-list li {
+            margin-bottom: 12px;
+        }
+        .resource-list a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .resource-list a:hover {
+            text-decoration: underline;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .back-link:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <span class="logo-text">DSA Search</span>
+                </a>
+                <span class="logo-tagline">Semantic Problem Search</span>
+            </div>
+            <div class="nav-right">
+                <a href="index.html" class="nav-link">Search</a>
+                <a href="https://github.com/AbhijitDoesCoding/DSA-Based-Search-Engine.git" target="_blank" class="github-star">
+                    <span>⭐ Star on GitHub</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="docs-container">
+        <a href="index.html" class="back-link">← Back to Search</a>
+        
+        <header class="hero" style="padding: 20px 0;">
+            <p class="hero-intro">Documentation & Technical Overview</p>
+            <h1>Understanding the <span class="accent-text">Core Engine</span></h1>
+            <div class="hero-divider"></div>
+        </header>
+
+        <section class="docs-section">
+            <h2>🎯 Why TF–IDF?</h2>
+            <p>When you search for “tree,” you’ll get results mentioning “tree” everywhere—even in generic posts. TF–IDF down-weights common words and boosts terms that are important in a particular document but rare across the corpus.</p>
+            <div class="example-box">
+                <strong>Example:</strong> In a collection of math problems, “array” appears frequently (low weight), but “quicksort” appears in few documents (high weight).
+            </div>
+
+            <h3>🧮 Term Frequency (TF)</h3>
+            <p>How often a term appears in a document, normalized by document length.</p>
+            <div class="formula">
+                TF(t,d) = (Number of times term t appears in document d) / (Total terms in d)
+            </div>
+            <div class="example-box">
+                <strong>Example:</strong> If “binary” appears 3 times in a 100-word problem statement, TF = 3/100 = 0.03.
+            </div>
+
+            <h3>🌍 Inverse Document Frequency (IDF)</h3>
+            <p>How unique or rare a term is across all documents.</p>
+            <div class="formula">
+                IDF(t) = log( (Total number of documents) / (Number of documents containing term t) )
+            </div>
+            <div class="example-box">
+                <strong>Example:</strong> In 1,000 problems, if “dfs” appears in 10 of them, IDF = log(1000/10) ≈ 2.
+            </div>
+
+            <h3>✖️ Calculating TF–IDF</h3>
+            <p>A term gets a high TF–IDF if it’s frequent in one document (high TF) but rare in the corpus (high IDF).</p>
+            <div class="formula">
+                TF–IDF(t,d) = TF(t,d) × IDF(t)
+            </div>
+            <div class="example-box">
+                <strong>Example:</strong> “quicksort” appears once in a 100-word doc (TF=0.01) and in 5 of 1000 docs (IDF≈2.3), TF–IDF≈0.023, ranking it above common terms.
+            </div>
+        </section>
+
+        <section class="docs-section">
+            <h2>📚 Resources</h2>
+            <h3>Search Engine Logic</h3>
+            <ul class="resource-list">
+                <li>
+                    <span>TF–IDF on YouTube: </span>
+                    <a href="https://www.youtube.com/watch?v=ATK6fm3cYfI" target="_blank">Watch Tutorial</a>
+                </li>
+                <li>
+                    <span>Medium Tutorial: </span>
+                    <a href="https://medium.com/@abhishekjainindore24/tf-idf-in-nlp-term-frequency-inverse-document-frequency-e05b65932f1d" target="_blank">Read Article</a>
+                </li>
+            </ul>
+
+            <h3>Scraping & Data</h3>
+            <ul class="resource-list">
+                <li>
+                    <span>Puppeteer YouTube Tutorial: </span>
+                    <a href="https://www.youtube.com/watch?v=lgyszZhAZOI" target="_blank">Watch Tutorial</a>
+                </li>
+                <li>
+                    <span>Puppeteer Documentation: </span>
+                    <a href="https://pptr.dev/" target="_blank">Visit Site</a>
+                </li>
+            </ul>
+        </section>
+
+        <section class="docs-section">
+            <h2>👤 About the Author</h2>
+            <div class="author-section">
+                <div class="author-info">
+                    <h4>Abhijit Balpande</h4>
+                    <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">Engineering Student & Developer passionate about data structures and high-performance search systems.</p>
+                    <div class="author-links">
+                        <a href="https://github.com/AbhijitDoesCoding" target="_blank">GitHub</a>
+                        <a href="https://www.linkedin.com/in/abhijit-balpande/" target="_blank">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>Client-side semantic search engine for competitive programming.</p>
+            <div class="footer-links">
+                <a href="https://github.com/AbhijitDoesCoding" target="_blank">GitHub</a>
+                <span class="divider">|</span>
+                <a href="https://www.linkedin.com/in/abhijit-balpande/" target="_blank">LinkedIn</a>
+                <span class="divider">|</span>
+                <a href="https://github.com/AbhijitDoesCoding/DSA-Based-Search-Engine.git" target="_blank">Repository</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
