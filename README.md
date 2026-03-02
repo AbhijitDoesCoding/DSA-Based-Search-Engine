@@ -1,6 +1,6 @@
 # DSA Search Engine
 
-A high-performance, industrial-style search engine for Data Structures and Algorithms (DSA) problems. Instantly search and filter over 14,000+ problems across multiple competitive programming platforms with a semantic, relevance-first approach.
+A high-performance, industrial-style search engine for Data Structures and Algorithms (DSA) problems. Instantly search and filter over 8,000+ problems across multiple competitive programming platforms with a semantic, relevance-first approach.
 
 ## ✨ Features
 - **Fast Search:** Indexed with TF-IDF and ranked using Cosine Similarity for high relevance.
