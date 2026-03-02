@@ -6,6 +6,8 @@ const corpusPath = path.join(process.cwd(), "corpus");
 
 const cfPath = path.join(folderPath, "codeforces-problems.json");
 const lcPath = path.join(folderPath, "leetcode-problems.json");
+const csesPath = path.join(folderPath, "cses-problems.json");
+const atcoderPath = path.join(folderPath, "atcoder-problems.json");
 const outputPath = path.join(corpusPath, "all-problems.json");
 
 function readJSON(filePath) {
@@ -21,11 +23,15 @@ function mergeProblems() {
 
     const codeforces = readJSON(cfPath);
     const leetcode = readJSON(lcPath);
+    const cses = readJSON(csesPath);
+    const atcoder = readJSON(atcoderPath);
 
     console.log(`Codeforces: ${codeforces.length}`);
     console.log(`LeetCode: ${leetcode.length}`);
+    console.log(`CSES: ${cses.length}`);
+    console.log(`AtCoder: ${atcoder.length}`);
 
-    const combined = [...codeforces, ...leetcode];
+    const combined = [...codeforces, ...leetcode, ...cses, ...atcoder];
 
     const uniqueMap = new Map();
 

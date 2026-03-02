@@ -9,6 +9,33 @@ const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
 async function scrapeLeetcode() {
 
+    const folderPath = path.join(process.cwd(), "problem-set");
+    if (!fs.existsSync(folderPath)) {
+        fs.mkdirSync(folderPath);
+    }
+
+    const filePath = path.join(folderPath, "leetcode-problems.json");
+
+    // ----------------------------
+    // 🔁 RESUME SUPPORT
+    // ----------------------------
+    let problems = [];
+    let scrapedSlugs = new Set();
+
+    if (fs.existsSync(filePath)) {
+        console.log("🔄 Existing file found. Loading for resume...");
+
+        const existingData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+        problems = existingData;
+
+        for (const p of existingData) {
+            const slug = p.url.split("/problems/")[1].replace("/", "");
+            scrapedSlugs.add(slug);
+        }
+
+        console.log(`📂 Already scraped: ${scrapedSlugs.size}`);
+    }
+
     const browser = await puppeteer.launch({
         headless: true,
         args: ["--no-sandbox", "--disable-setuid-sandbox"]
@@ -37,18 +64,15 @@ async function scrapeLeetcode() {
 
     console.log("📦 Free problems:", problemList.length);
 
-    const problems = [];
-
-    const folderPath = path.join(process.cwd(), "problem-set");
-    if (!fs.existsSync(folderPath)) {
-        fs.mkdirSync(folderPath);
-    }
-
-    const filePath = path.join(folderPath, "leetcode-problems.json");
-
     for (let i = 0; i < problemList.length; i++) {
 
         const { title, slug } = problemList[i];
+
+        // 🔁 Skip already scraped
+        if (scrapedSlugs.has(slug)) {
+            console.log(`⏭️ Skipping (already scraped): ${title}`);
+            continue;
+        }
 
         try {
 
@@ -79,17 +103,21 @@ async function scrapeLeetcode() {
                 continue;
             }
 
-            problems.push({
+            const problemData = {
                 title,
                 url: `https://leetcode.com/problems/${slug}/`,
                 description
-            });
+            };
 
-            console.log(`✅ ${i + 1}/${problemList.length} - ${title}`);
+            problems.push(problemData);
+            scrapedSlugs.add(slug);
 
-            if ((i + 1) % 10 === 0) {
+            console.log(`✅ Scraped: ${title} (${problems.length} total)`);
+
+            // 💾 Save every 10 new problems
+            if (problems.length % 10 === 0) {
                 fs.writeFileSync(filePath, JSON.stringify(problems, null, 2));
-                console.log(`💾 Saved at ${i + 1}`);
+                console.log("💾 Progress saved");
             }
 
             await delay(400);
@@ -101,7 +129,7 @@ async function scrapeLeetcode() {
 
     fs.writeFileSync(filePath, JSON.stringify(problems, null, 2));
 
-    console.log("🎉 Done!");
+    console.log("🎉 Scraping Complete!");
 
     await browser.close();
 }
